@@ -8,7 +8,7 @@ A collection of third-party plugins for [DankMaterialShell](https://github.com/A
 
 ### [Tailscale](./dms-tailscale)
 
-A simple DMS Bar widget for toggling your Tailscale connection.
+A DMS Bar widget for managing your Tailscale connection and peers. Inspired by [Noctalia's Tailscale plugin](https://github.com/noctalia-dev/noctalia-plugins/tree/main/tailscale), built on [Cooper Glavin's](https://github.com/cglavin50) original widget.
 
 ![Tailscale](./assets/dms-tailscale.png)
 
