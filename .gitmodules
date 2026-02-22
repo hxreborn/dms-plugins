@@ -1,0 +1,3 @@
+[submodule "dms-tailscale"]
+	path = dms-tailscale
+	url = https://github.com/hxreborn/dms-tailscale.git
