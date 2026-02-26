@@ -1,0 +1,14 @@
+{
+  "id": "screenRecorder",
+  "name": "Screen Recorder",
+  "description": "Screen recording via gpu-screen-recorder with configurable video/audio settings",
+  "version": "1.0.0",
+  "author": "hxreborn",
+  "icon": "videocam",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./ScreenRecorderWidget.qml",
+  "settings": "./ScreenRecorderSettings.qml",
+  "requires": ["gpu-screen-recorder"],
+  "permissions": ["settings_read", "settings_write"]
+}

@@ -12,6 +12,10 @@ A DMS Bar widget for managing your Tailscale connection and peers. Inspired by [
 
 ![Tailscale](./assets/dms-tailscale.png)
 
+### [Screen Recorder](./dms-screen-recorder)
+
+A DMS bar widget wrapping `gpu-screen-recorder` for screen recording with configurable video/audio settings, portal and screen capture, countdown timer, and clipboard integration. Inspired by [Noctalia's Screen Recorder plugin](https://github.com/noctalia-dev/noctalia-plugins/tree/main/screen-recorder).
+
 ## Installation
 
 Install individual plugins via the DMS CLI:
