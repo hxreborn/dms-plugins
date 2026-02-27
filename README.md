@@ -6,26 +6,45 @@ A collection of third-party plugins for [DankMaterialShell](https://github.com/A
 
 ## Plugins
 
-### [Tailscale](https://github.com/hxreborn/dms-tailscale/tree/feat/peer-management-panel)
+### [Tailscale Manager](./dms-tailscale-manager)
 
-A DMS Bar widget for managing your Tailscale connection and peers. Inspired by [Noctalia's Tailscale plugin](https://github.com/noctalia-dev/noctalia-plugins/tree/main/tailscale), built on [Cooper Glavin's](https://github.com/cglavin50) original widget.
+A DMS bar widget for managing your Tailscale connection and peers.
+
+> Tested on Hyprland. Untested on Niri/Sway.
 
 ![Tailscale](./assets/dms-tailscale.png)
 
+<details>
+<summary>Settings</summary>
+
+![Tailscale Settings](./assets/dms-tailscale_settings.png)
+
+</details>
+
 ### [Screen Recorder](./dms-screen-recorder)
 
-A DMS bar widget wrapping `gpu-screen-recorder` for screen recording with configurable video/audio settings, portal and screen capture, countdown timer, and clipboard integration. Inspired by [Noctalia's Screen Recorder plugin](https://github.com/noctalia-dev/noctalia-plugins/tree/main/screen-recorder).
+A DMS bar widget wrapping `gpu-screen-recorder` for screen recording with configurable video, audio, and capture settings.
+
+> Tested on Hyprland. Untested on Niri/Sway.
+
+![Screen Recorder](./assets/dms-screen-recorder.png)
+
+<details>
+<summary>Settings</summary>
+
+![Screen Recorder Settings](./assets/dms-screen-recorder-settings.png)
+
+</details>
 
 ## Installation
 
-Install individual plugins via the DMS CLI:
-
 ```bash
-dms plugins install <plugin-url>
+git clone https://github.com/hxreborn/dms-plugins.git
+cp -r dms-plugins/<plugin-dir> ~/.config/DankMaterialShell/plugins/<plugin-id>
 ```
 
-Or clone manually:
+Then enable in Settings -> Plugins -> Scan for Plugins.
 
-```bash
-git clone <plugin-url> ~/.config/DankMaterialShell/plugins/<plugin-name>
-```
+## Credits
+
+Both plugins were inspired by [Noctalia's plugin collection](https://github.com/noctalia-dev/noctalia-plugins).

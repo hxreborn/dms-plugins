@@ -1,0 +1,13 @@
+{
+  "id": "tailscaleManager",
+  "name": "Tailscale Manager",
+  "description": "Monitor your tailnet, browse peers, copy IPs, SSH into devices, and toggle connectivity from the bar",
+  "version": "1.0.0",
+  "author": "hxreborn",
+  "icon": "widgets",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./TailscaleWidget.qml",
+  "settings": "./TailscaleSettings.qml",
+  "permissions": ["settings_read", "settings_write"]
+}
