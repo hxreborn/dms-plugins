@@ -394,7 +394,7 @@ PluginComponent {
         if (!isAvailable || isActive)
             return;
 
-        if (startDelay > 0) {
+        if (startDelay > 0 && videoSource !== "portal") {
             root.countdownRemaining = startDelay;
             root.recorderState = sCountdown;
             countdownTimer.start();
