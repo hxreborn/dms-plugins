@@ -5,7 +5,7 @@ import qs.Widgets
 
 PluginSettings {
     id: root
-    pluginId: "tailscaleManager"
+    pluginId: "tailscale"
 
     StyledText {
         width: parent.width

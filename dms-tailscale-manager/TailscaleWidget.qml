@@ -148,6 +148,15 @@ PluginComponent {
         statusProcess.running = true;
     }
 
+    Process {
+        id: terminalProcess
+    }
+
+    function launchTerminal(args) {
+        terminalProcess.command = args;
+        terminalProcess.running = true;
+    }
+
     function toggleTailscale() {
         if (!root.tailscaleInstalled) return;
 

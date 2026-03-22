@@ -20,10 +20,6 @@ Column {
         id: clipboardProcess
     }
 
-    Process {
-        id: terminalProcess
-    }
-
     property var sortedPeerList: {
         if (!daemon?.peerList) return [];
         var peers = daemon.peerList.slice();
@@ -81,16 +77,14 @@ Column {
                     ToastService.showError("Terminal not configured - set it in plugin settings");
                     return;
                 }
-                terminalProcess.command = [daemon.terminalCommand, "-e", "ssh", ip];
-                terminalProcess.running = true;
+                daemon.launchTerminal([daemon.terminalCommand, "-e", "ssh", ip]);
                 break;
             case "ping":
                 if (!isTerminalConfigured) {
                     ToastService.showError("Terminal not configured - set it in plugin settings");
                     return;
                 }
-                terminalProcess.command = [daemon.terminalCommand, "-e", "ping", "-c", daemon.pingCount.toString(), ip];
-                terminalProcess.running = true;
+                daemon.launchTerminal([daemon.terminalCommand, "-e", "ping", "-c", daemon.pingCount.toString(), ip]);
                 break;
             case "admin-console":
                 var dnsName = (peer.DNSName || "").replace(/\.$/, "");
