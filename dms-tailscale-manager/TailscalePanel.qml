@@ -391,7 +391,7 @@ Column {
         height: 40
         visible: daemon?.tailscaleRunning ?? false
         radius: Theme.cornerRadius
-        color: adminMouseArea.containsMouse ? Theme.surfaceHover : Theme.withAlpha(Theme.surfaceText, 0.05)
+        color: adminMouseArea.containsMouse ? Theme.withAlpha(Theme.primary, 0.8) : Theme.primary
 
         Row {
             anchors.centerIn: parent
@@ -400,19 +400,19 @@ Column {
             DankIcon {
                 name: "open_in_new"
                 size: Theme.iconSize - 8
-                color: Theme.surfaceText
+                color: Theme.surface
             }
 
             StyledText {
                 text: "Admin Console"
                 font.pixelSize: Theme.fontSizeSmall
-                color: Theme.surfaceText
+                color: Theme.surface
             }
         }
 
         DankRipple {
             id: adminRipple
-            rippleColor: Theme.surfaceText
+            rippleColor: Theme.surface
             cornerRadius: parent.radius
         }
 

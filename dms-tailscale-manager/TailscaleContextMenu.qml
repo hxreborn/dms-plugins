@@ -38,7 +38,7 @@ Popup {
         },
         {
             text: "Ping Host",
-            icon: "network_ping",
+            icon: "speed",
             action: "ping",
             enabled: isTerminalConfigured
         },
