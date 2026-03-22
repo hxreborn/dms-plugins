@@ -38,7 +38,7 @@ Popup {
         },
         {
             text: "Ping Host",
-            icon: "speed",
+            icon: "radar",
             action: "ping",
             enabled: isTerminalConfigured
         },
