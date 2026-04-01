@@ -193,6 +193,12 @@ PluginComponent {
         checkTailscaleInstalled();
     }
 
+    pillRightClickAction: () => {
+        if (root.tailscaleInstalled) {
+            root.toggleTailscale();
+        }
+    }
+
     popoutWidth: 400
     popoutHeight: 620
 
