@@ -102,6 +102,14 @@ PluginSettings {
         placeholder: "ghostty"
     }
 
+    StringSetting {
+        settingKey: "sshUser"
+        label: "SSH User"
+        description: "Default SSH username. Leave empty to use your current user."
+        defaultValue: ""
+        placeholder: "root"
+    }
+
     SliderSetting {
         settingKey: "pingCount"
         label: "Ping Count"

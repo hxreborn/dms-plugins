@@ -24,6 +24,7 @@ PluginComponent {
     readonly property bool showPeerCount: pluginData?.showPeerCount ?? true
     readonly property bool hideDisconnected: pluginData?.hideDisconnected ?? false
     readonly property string terminalCommand: pluginData?.terminalCommand ?? ""
+    readonly property string sshUser: pluginData?.sshUser ?? ""
     readonly property int pingCount: pluginData?.pingCount ?? 5
     readonly property string defaultPeerAction: pluginData?.defaultPeerAction ?? "copy-ip"
     readonly property bool closeOnAction: pluginData?.closeOnAction ?? true
