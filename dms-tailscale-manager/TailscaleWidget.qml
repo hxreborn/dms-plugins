@@ -26,6 +26,8 @@ PluginComponent {
     readonly property string terminalCommand: pluginData?.terminalCommand ?? ""
     readonly property int pingCount: pluginData?.pingCount ?? 5
     readonly property string defaultPeerAction: pluginData?.defaultPeerAction ?? "copy-ip"
+    readonly property bool closeOnAction: pluginData?.closeOnAction ?? true
+    readonly property bool closeOnCopy: pluginData?.closeOnCopy ?? false
 
     function filterIPv4(ips) {
         if (!ips || !ips.length) return [];
@@ -195,9 +197,10 @@ PluginComponent {
 
     popoutContent: Component {
         PopoutComponent {
+            id: popoutRoot
             headerText: "Tailscale"
             detailsText: root.tailscaleRunning
-                ? (root.tailscaleHostname || root.tailscaleIp) + (root.showPeerCount && root.peerCount > 0 ? " · " + root.peerCount + " peers" : "")
+                ? "Connected" + (root.showPeerCount && root.peerCount > 0 ? " · " + root.peerCount + " devices" : "")
                 : "Disconnected"
             showCloseButton: true
 
@@ -205,6 +208,7 @@ PluginComponent {
                 width: parent.width - Theme.spacingM * 2
                 anchors.horizontalCenter: parent.horizontalCenter
                 daemon: root
+                popoutRoot: popoutRoot
             }
         }
     }

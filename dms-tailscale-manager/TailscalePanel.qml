@@ -10,11 +10,14 @@ Column {
     id: root
 
     property var daemon: null
+    property var popoutRoot: null
 
     width: parent.width
     spacing: Theme.spacingM
 
     property bool isTerminalConfigured: (daemon?.terminalCommand ?? "").trim() !== ""
+    property bool closeOnAction: (daemon?.closeOnAction ?? true)
+    property bool closeOnCopy: (daemon?.closeOnCopy ?? false)
 
     Process {
         id: clipboardProcess
@@ -91,16 +94,21 @@ Column {
                 Qt.openUrlExternally("https://login.tailscale.com/admin/machines/" + encodeURIComponent(dnsName));
                 break;
         }
+
+        var isCopyAction = (action === "copy-ip" || action === "copy-hostname");
+        if (root.popoutRoot && ((isCopyAction && root.closeOnCopy) || (!isCopyAction && root.closeOnAction))) {
+            root.popoutRoot.closePopout();
+        }
     }
 
     StyledRect {
         width: parent.width
-        height: ipRow.implicitHeight + Theme.spacingS * 2
+        height: identityCol.implicitHeight + Theme.spacingS * 2
         visible: (daemon?.tailscaleRunning ?? false) && (daemon?.tailscaleIp ?? "") !== ""
         color: Theme.surfaceContainerHigh
 
         Row {
-            id: ipRow
+            id: identityRow
             anchors.fill: parent
             anchors.margins: Theme.spacingS
             spacing: Theme.spacingS
@@ -113,11 +121,12 @@ Column {
             }
 
             Column {
+                id: identityCol
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
 
                 StyledText {
-                    text: "Your IP"
+                    text: daemon?.tailscaleHostname || "Unknown"
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.surfaceVariantText
                 }
@@ -127,26 +136,19 @@ Column {
                     font.pixelSize: Theme.fontSizeMedium
                     isMonospace: true
                     color: ipMouseArea.containsMouse ? Theme.primary : Theme.surfaceText
-                }
-            }
-        }
 
-        DankRipple {
-            id: ipRipple
-            rippleColor: Theme.surfaceText
-            cornerRadius: parent.radius
-        }
-
-        MouseArea {
-            id: ipMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onPressed: mouse => ipRipple.trigger(mouse.x, mouse.y)
-            onClicked: {
-                if (daemon?.tailscaleIp) {
-                    root.copyToClipboard(daemon.tailscaleIp);
-                    ToastService.showInfo("IP copied: " + daemon.tailscaleIp);
+                    MouseArea {
+                        id: ipMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            if (daemon?.tailscaleIp) {
+                                root.copyToClipboard(daemon.tailscaleIp);
+                                ToastService.showInfo("IP copied: " + daemon.tailscaleIp);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -422,7 +424,12 @@ Column {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onPressed: mouse => adminRipple.trigger(mouse.x, mouse.y)
-            onClicked: Qt.openUrlExternally("https://login.tailscale.com/admin")
+            onClicked: {
+                Qt.openUrlExternally("https://login.tailscale.com/admin");
+                if (root.popoutRoot && root.closeOnAction) {
+                    root.popoutRoot.closePopout();
+                }
+            }
         }
     }
 

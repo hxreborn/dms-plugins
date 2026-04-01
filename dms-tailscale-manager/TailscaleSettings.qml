@@ -63,6 +63,20 @@ PluginSettings {
         defaultValue: false
     }
 
+    ToggleSetting {
+        settingKey: "closeOnAction"
+        label: "Close on Action"
+        description: "Close the popout after SSH, ping, or admin console actions."
+        defaultValue: true
+    }
+
+    ToggleSetting {
+        settingKey: "closeOnCopy"
+        label: "Close on Copy"
+        description: "Also close the popout after copying an IP or hostname."
+        defaultValue: false
+    }
+
     StyledText {
         width: parent.width
         text: "Terminal Configuration"
