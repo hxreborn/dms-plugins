@@ -87,7 +87,7 @@ Column {
                     ToastService.showError("Terminal not configured - set it in plugin settings");
                     return;
                 }
-                daemon.launchTerminal([daemon.terminalCommand, "-e", "ping", "-c", daemon.pingCount.toString(), ip]);
+                daemon.launchTerminal([daemon.terminalCommand, "-e", "bash", "-c", "ping -c " + daemon.pingCount.toString() + " " + ip + "; echo; read -p 'Press Enter to close...' key"]);
                 break;
             case "admin-console":
                 var dnsName = (peer.DNSName || "").replace(/\.$/, "");
