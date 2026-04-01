@@ -18,6 +18,7 @@ Column {
     property bool isTerminalConfigured: (daemon?.terminalCommand ?? "").trim() !== ""
     property bool closeOnAction: (daemon?.closeOnAction ?? true)
     property bool closeOnCopy: (daemon?.closeOnCopy ?? false)
+    property string sshUser: (daemon?.sshUser ?? "").trim()
 
     Process {
         id: clipboardProcess
@@ -60,6 +61,15 @@ Column {
         }
     }
 
+    function launchInTerminal(cmd) {
+        if (!isTerminalConfigured) {
+            ToastService.showError("Terminal not configured - set it in plugin settings");
+            return false;
+        }
+        daemon.launchTerminal([daemon.terminalCommand, "-e", "bash", "-c", cmd + "; echo; read -p 'Press Enter to close...' key"]);
+        return true;
+    }
+
     function executePeerAction(action, peer) {
         var ips = daemon.filterIPv4(peer.TailscaleIPs);
         if (ips.length === 0) return;
@@ -76,18 +86,11 @@ Column {
                 ToastService.showInfo("Hostname copied: " + hostname);
                 break;
             case "ssh":
-                if (!isTerminalConfigured) {
-                    ToastService.showError("Terminal not configured - set it in plugin settings");
-                    return;
-                }
-                daemon.launchTerminal([daemon.terminalCommand, "-e", "ssh", ip]);
+                var sshTarget = root.sshUser !== "" ? root.sshUser + "@" + ip : ip;
+                if (!launchInTerminal("ssh " + sshTarget)) return;
                 break;
             case "ping":
-                if (!isTerminalConfigured) {
-                    ToastService.showError("Terminal not configured - set it in plugin settings");
-                    return;
-                }
-                daemon.launchTerminal([daemon.terminalCommand, "-e", "bash", "-c", "ping -c " + daemon.pingCount.toString() + " " + ip + "; echo; read -p 'Press Enter to close...' key"]);
+                if (!launchInTerminal("ping -c " + daemon.pingCount.toString() + " " + ip)) return;
                 break;
             case "admin-console":
                 var dnsName = (peer.DNSName || "").replace(/\.$/, "");
