@@ -117,7 +117,7 @@ Column {
             spacing: Theme.spacingS
 
             DankIcon {
-                name: "badge"
+                name: "dns"
                 size: Theme.iconSize - 6
                 color: Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
