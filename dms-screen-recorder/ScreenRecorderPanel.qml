@@ -140,6 +140,7 @@ Column {
                         easing.type: Easing.InOutSine
                     }
                 }
+
             }
 
             Column {
@@ -161,27 +162,63 @@ Column {
                     color: Theme.error
                 }
 
-                Item {
+                StyledText {
                     visible: !root.available
-                    width: recheckText.width
-                    height: recheckText.height
-
-                    StyledText {
-                        id: recheckText
-                        text: "gpu-screen-recorder not found. Tap to recheck"
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceVariantText
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            if (daemon)
-                                daemon.recheckAvailability();
-                        }
-                    }
+                    text: "gpu-screen-recorder not found"
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.surfaceVariantText
                 }
+            }
+        }
+    }
+
+    StyledRect {
+        id: recheckRect
+        readonly property bool checking: daemon?.isChecking ?? false
+
+        width: parent.width
+        height: recheckRow.implicitHeight + Theme.spacingS * 2
+        visible: !root.available
+        opacity: recheckRect.checking ? 0.6 : 1.0
+        color: recheckMouseArea.containsMouse && !recheckRect.checking ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+        Row {
+            id: recheckRow
+            anchors.fill: parent
+            anchors.margins: Theme.spacingS
+            spacing: Theme.spacingS
+
+            DankIcon {
+                name: recheckRect.checking ? "hourglass_empty" : "refresh"
+                size: Theme.iconSize - 6
+                color: recheckMouseArea.containsMouse && !recheckRect.checking ? Theme.primary : Theme.surfaceVariantText
+                anchors.verticalCenter: parent.verticalCenter
+
+                SequentialAnimation on opacity {
+                    running: recheckRect.checking
+                    loops: Animation.Infinite
+                    NumberAnimation { to: 0.3; duration: 600; easing.type: Easing.InOutSine }
+                    NumberAnimation { to: 1.0; duration: 600; easing.type: Easing.InOutSine }
+                }
+            }
+
+            StyledText {
+                text: recheckRect.checking ? "Checking..." : "Check Again"
+                font.pixelSize: Theme.fontSizeSmall
+                color: recheckMouseArea.containsMouse && !recheckRect.checking ? Theme.primary : Theme.surfaceText
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+
+        MouseArea {
+            id: recheckMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: recheckRect.checking ? Qt.ArrowCursor : Qt.PointingHandCursor
+            enabled: !recheckRect.checking
+            onClicked: {
+                if (daemon)
+                    daemon.recheckAvailability();
             }
         }
     }

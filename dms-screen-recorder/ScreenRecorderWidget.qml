@@ -12,6 +12,7 @@ PluginComponent {
 
     property bool isAvailable: false
     property bool isFlatpak: false
+    property bool isChecking: false
 
     readonly property string sIdle: "idle"
     readonly property string sCountdown: "countdown"
@@ -234,6 +235,7 @@ PluginComponent {
             if (exitCode === 0) {
                 root.isAvailable = true;
                 root.isFlatpak = false;
+                root.isChecking = false;
             } else {
                 flatpakCheckerProcess.command = ["sh", "-c", "command -v flatpak >/dev/null 2>&1 && flatpak list --app | grep -q 'com.dec05eba.gpu_screen_recorder'"];
                 flatpakCheckerProcess.running = true;
@@ -249,6 +251,7 @@ PluginComponent {
         onExited: function (exitCode, exitStatus) {
             root.isAvailable = (exitCode === 0);
             root.isFlatpak = (exitCode === 0);
+            root.isChecking = false;
         }
     }
 
@@ -446,11 +449,13 @@ PluginComponent {
 
     function recheckAvailability() {
         root.isAvailable = false;
+        root.isChecking = true;
         checkerProcess.command = ["which", "gpu-screen-recorder"];
         checkerProcess.running = true;
     }
 
     Component.onCompleted: {
+        root.isChecking = true;
         checkerProcess.command = ["which", "gpu-screen-recorder"];
         checkerProcess.running = true;
     }
