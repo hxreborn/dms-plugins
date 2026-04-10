@@ -195,6 +195,10 @@ PluginComponent {
 
         cmd.push("-w", videoSource, "-f", frameRate.toString(), "-k", effectiveVideoCodec, "-q", quality, "-cr", effectiveColorRange, "-cursor", showCursor ? "yes" : "no", "-o", outputPath);
 
+        if (videoSource === "portal") {
+            cmd.push("-restore-portal-session", "yes");
+        }
+
         if (audioSource !== "none") {
             cmd.push("-ac", effectiveAudioCodec);
             if (audioSource === "both") {
@@ -360,9 +364,8 @@ PluginComponent {
         interval: 3000
         repeat: false
         onTriggered: {
-            if (recorderProcess.running) {
-                recorderProcess.signal(9);
-            }
+            if (recorderProcess.running)
+                Quickshell.execDetached(["pkill", "-9", "-f", "gpu-screen-recorder"]);
         }
     }
 
@@ -427,7 +430,7 @@ PluginComponent {
         root.recorderState = sStopping;
 
         if (recorderProcess.running) {
-            recorderProcess.signal(2);
+            Quickshell.execDetached(["pkill", "-SIGINT", "-f", "gpu-screen-recorder"]);
             killFallbackTimer.start();
         } else {
             root.recorderState = root.sIdle;
