@@ -420,6 +420,8 @@ PluginComponent {
     }
 
     function stopRecording() {
+        closePopout();
+
         if (recorderState === sCountdown) {
             countdownTimer.running = false;
             root.recorderState = root.sIdle;
