@@ -465,6 +465,12 @@ PluginComponent {
         checkerProcess.running = true;
     }
 
+    pillRightClickAction: () => {
+        if (root.isAvailable) {
+            root.toggleRecording();
+        }
+    }
+
     popoutWidth: 380
     popoutHeight: 320
 
@@ -508,12 +514,6 @@ PluginComponent {
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
-
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.RightButton
-                onClicked: root.toggleRecording()
-            }
         }
     }
 
@@ -533,12 +533,6 @@ PluginComponent {
                     color: root.pillIconColor
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.RightButton
-                onClicked: root.toggleRecording()
             }
         }
     }
